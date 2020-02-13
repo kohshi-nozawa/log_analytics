@@ -2,8 +2,9 @@ Attribute VB_Name = "Module1"
 Sub mkaccess_log()
   ' ログファイルの名前を定義
   Dim dates As String
+  Dim NewxlsxName As String
   dates = Format(Now, "yyyy-mm-dd")
-  Dim NewxlsxName = "access_" & dates & ".xlsx"
+  NewxlsxName = "access_" & dates & ".xlsx"
 
   ' テンプレートをコピーして本日のログファイルを作成
   Dim ret As Long
