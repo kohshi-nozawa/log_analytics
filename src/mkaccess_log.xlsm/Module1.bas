@@ -1,19 +1,21 @@
 Attribute VB_Name = "Module1"
 Sub mkaccess_log()
-  ' ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰ã‚’å®šç¾©
+  ' ƒƒOƒtƒ@ƒCƒ‹‚Ì–¼‘O‚ğ’è‹`
   Dim dates As String
   dates = Format(Now, "yyyy-mm-dd")
   Dim NewxlsxName = "access_" & dates & ".xlsx"
 
-  ' ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã—ã¦æœ¬æ—¥ã®ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
+  ' ƒeƒ“ƒvƒŒ[ƒg‚ğƒRƒs[‚µ‚Ä–{“ú‚ÌƒƒOƒtƒ@ƒCƒ‹‚ğì¬
   Dim ret As Long
   Dim Current As String
   If Dir("C:\Work\Test.txt") <> "" Then
-        ret = MsgBox("åŒåã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã™ã€‚" & vbCrLf & _
-                  "ä¸Šæ›¸ãã—ã¾ã™ã‹ï¼Ÿ", vbYesNo)
+        ret = MsgBox("“¯–¼‚Ìƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ü‚·B" & vbCrLf & _
+                  "ã‘‚«‚µ‚Ü‚·‚©H", vbYesNo)
         If ret = vbNo Then Exit Sub
   End If
   Current = ActiveWorkbook.Path
   FileCopy Current & "access_" & "temp" & ".xlsx", Current & NewxlsxName
 
+  Dim OpenFileName As Variant
+  OpenFileName = Application.GetOpenFilename(FileFilter:="‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹,*.log?", _MultiSelect:=True)
 End Sub
