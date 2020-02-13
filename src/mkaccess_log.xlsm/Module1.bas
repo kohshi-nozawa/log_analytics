@@ -15,6 +15,6 @@ Sub mkaccess_log()
         If ret = vbNo Then Exit Sub
   End If
   Current = ActiveWorkbook.Path
-  FileCopy Current & "access_" & "temp" & ".xlsx", Current & NewxlsxName
+  FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
 End Sub
