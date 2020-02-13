@@ -17,11 +17,12 @@ Sub mkaccess_log()
   Current = ActiveWorkbook.Path
   FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
-  Dim OpenFileName As Variant
-  OpenFileName = Application.GetOpenFilename(FileFilter:="Microsoft Excelブック,*.xls?", _MultiSelect:=True)
-    If IsArray(OpenFileName) Then
-        ''選択されたファイルへの処理
-    Else
-        MsgBox "キャンセルされました"
-    End If
+  '//logファイルを開くダイアログを開く
+  selectFileName = _
+    Application.GetOpenFilename( _
+      FileFilter:="全てのファイル(*),*.log", _
+      FilterIndex:=1, _
+      Title:="読み込むファイルを選択してください。", _
+      MultiSelect:=True _
+    )
 End Sub
