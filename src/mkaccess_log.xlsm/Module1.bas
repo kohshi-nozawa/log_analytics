@@ -34,8 +34,6 @@ Sub mkaccess_log()
   Dim ws1 As WorkSheet
   Dim n As Long
   Workbooks.Open (Current & "\" & NewxlsxName)
-  Set wb1 = Workbooks(NewxlsxName)
-  Set ws1 = Worksheets("access_log")
   n = 1
     ' 全てのファイルで繰り返し処理を行う
       For Each oneFileName In selectFileName
@@ -43,7 +41,8 @@ Sub mkaccess_log()
           Do Until EOF(1)
             Line Input #1, buf
             n = n + 1
-            wb1.ws1.Range(Cells(n, 2)).Value = buf
+            Cells(n, 2) = buf
+            Cells(n, 2).WrapText = False
           Loop
         Close
       Next
