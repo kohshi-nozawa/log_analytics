@@ -28,10 +28,11 @@ Sub mkaccess_log()
   ' 選択したファイルに対する処理
   If IsArray(selectFileName) Then
   ' ログエクセルファイルを変数に格納してアクティブにする
-  Dim wb1 As Workbook
+  Dim wb1 As Workbook 
+  Dim ws1 As WorkSheet
   Dim n As Long
-  Workbooks.Open ThisWorkbook.Path & "\" & NewxlsxName
-  Set wb1 = ActiveWorkbook
+  Set wb1 = Workbooks(Current & "\" & NewxlsxName)
+  Set ws1 = Worksheets("access_log")
   n = 1
     ' 全てのファイルで繰り返し処理を行う
       For Each oneFileName In selectFileName
@@ -39,7 +40,8 @@ Sub mkaccess_log()
           Do Until EOF(1)
             Line Input #1, buf
             n = n + 1
-            ThisWorkbook.Worksheets("access_log").Cells(n, 2) = buf
+            wb1.ws1.Range(Cells(n, 2)) = buf
+          Loop
         Close
       Next
       Else
