@@ -18,6 +18,8 @@ Sub mkaccess_log()
   FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
   ' logファイルを開くためのダイアログを開く
+  ChDrive "C"
+  ChDir Current
   selectFileName = _
     Application.GetOpenFilename( _
       FileFilter:="すべてのファイル(*),*.*", _
