@@ -9,14 +9,16 @@ Sub mkaccess_log()
   ' テンプレートをコピーして本日のログファイルを作成
   Dim ret As Long
   Dim Current As String
-  If Dir(Current & "\" & NewxlsxName) <> "" Then
+  Dim TempFullPath As String
+  Dim NewFullPath As String
+  TempFullPath = Current & "\access_" & "temp" & ".xlsx"
+  NewFullPath = Current & "\" & NewxlsxName
+  If Dir(NewFullPath) <> "" Then
         ret = MsgBox("同名のファイルが存在します。" & vbCrLf & _
                   "上書きしますか？", vbYesNo)
         If ret = vbNo Then Exit Sub
   End If
   Current = ActiveWorkbook.Path
-  FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
+  FileCopy TempFullPath, NewFullPath
 
-  Dim OpenFileName As Variant
-  OpenFileName = Application.GetOpenFilename(FileFilter:="すべてのファイル,*.log?", _MultiSelect:=True)
 End Sub
