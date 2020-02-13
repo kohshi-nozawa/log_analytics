@@ -44,7 +44,7 @@ Sub mkaccess_log()
             Cells(n, 2) = buf
             Cells(n, 2).WrapText = False
           Loop
-        Close
+        Close #1
       Next
       Else
         MsgBox ("ファイルを選択しないで終了")
