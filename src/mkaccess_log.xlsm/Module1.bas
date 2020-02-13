@@ -33,6 +33,7 @@ Sub mkaccess_log()
   Dim wb1 As Workbook 
   Dim ws1 As WorkSheet
   Dim n As Long
+  Workbooks.Open (Current & "\" & NewxlsxName)
   Set wb1 = Workbooks(Current & "\" & NewxlsxName)
   Set ws1 = Worksheets("access_log")
   n = 1
