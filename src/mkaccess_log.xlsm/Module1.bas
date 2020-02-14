@@ -44,7 +44,7 @@ Sub mkaccess_log()
         fp = oneFileName
 
         ' ファイルを開く
-        Set ts = fso.OpenTextFile(fp, ForRreading)
+        Set ts = fso.OpenTextFile(fp)
           Do Until ts.AtEndOfStream
             line = ts.ReadLine
             items = Split(line, ",")
