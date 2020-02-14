@@ -1,5 +1,32 @@
 Attribute VB_Name = "Module1"
 Sub mkaccess_log()
+  ' logファイルを開くためのダイアログを開く
+  ChDrive "C"
+  ChDir Current
+  selectFileName = _
+    Application.GetOpenFilename( _
+      FileFilter:="すべてのファイル(*),*.*", _
+      FilterIndex:=1, _
+      Title:="読み込むファイルを選択してください。", _
+      MultiSelect:=True _
+    )
+  ' 選択したファイルに対する処理
+  Dim LF2CRLF As String ,inputText As String
+  If IsArray(selectFileName) Then
+    ' 全てのファイルで繰り返し処理を行う
+    For Each oneFileName In selectFileName
+      Open oneFileName For Input As #1
+        Do Until EOF(1)
+          Line Input #1, buf
+          LF2CRLF = buf
+          inputText = inputText & LfToCrlf(LF2CRLF)
+        Loop
+      Close #1
+    Next
+  Else
+    MsgBox ("ファイルを選択しないで終了します")
+  End If
+
   ' ログエクセルファイルの名前を定義
   Dim dates As String
   Dim NewxlsxName As String
@@ -17,39 +44,6 @@ Sub mkaccess_log()
   Current = ActiveWorkbook.Path
   FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
-  ' logファイルを開くためのダイアログを開く
-  ChDrive "C"
-  ChDir Current
-  selectFileName = _
-    Application.GetOpenFilename( _
-      FileFilter:="すべてのファイル(*),*.*", _
-      FilterIndex:=1, _
-      Title:="読み込むファイルを選択してください。", _
-      MultiSelect:=True _
-    )
-  ' 選択したファイルに対する処理
-  If IsArray(selectFileName) Then
-  ' ログエクセルファイルを変数に格納してアクティブにする
-  Dim wb1 As Workbook 
-  Dim ws1 As WorkSheet
-  Dim n As Long
-  Workbooks.Open (Current & "\" & NewxlsxName)
-  n = 1
-    ' 全てのファイルで繰り返し処理を行う
-      For Each oneFileName In selectFileName
-        Open oneFileName For Input As #1
-          Do Until EOF(1)
-            Line Input #1, buf
-            buf = LfToCrlf(buf)
-            n = n + 1
-            Cells(n, 2) = buf
-            Cells(n, 2).WrapText = False
-          Loop
-        Close #1
-      Next
-      Else
-        MsgBox ("ファイルを選択しないで終了")
-      End If
 End Sub
 
 '// LF→CRLF
