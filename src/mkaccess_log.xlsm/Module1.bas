@@ -40,6 +40,7 @@ Sub mkaccess_log()
         Open oneFileName For Input As #1
           Do Until EOF(1)
             Line Input #1, buf
+            buf = LfToCrlf(buf)
             n = n + 1
             Cells(n, 2) = buf
             Cells(n, 2).WrapText = False
@@ -50,3 +51,8 @@ Sub mkaccess_log()
         MsgBox ("ファイルを選択しないで終了")
       End If
 End Sub
+
+'// LF→CRLF
+Function LfToCrlf(a_sSrc As String) As String
+    LfToCrlf = Replace(a_sSrc, vbLf, vbCrLf)
+End Function
