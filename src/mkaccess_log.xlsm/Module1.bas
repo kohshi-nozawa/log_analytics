@@ -29,30 +29,21 @@ Sub mkaccess_log()
     )
   ' 選択したファイルに対する処理
   If IsArray(selectFileName) Then
+  ' ログエクセルファイルを変数に格納してアクティブにする
+  Dim wb1 As Workbook 
+  Dim ws1 As WorkSheet
   Dim n As Long
   Workbooks.Open (Current & "\" & NewxlsxName)
   n = 1
     ' 全てのファイルで繰り返し処理を行う
       For Each oneFileName In selectFileName
         Open oneFileName For Input As #1
-        Dim fso As New FileSystemObject
-        Dim ts As TextStream
-        Dim line As String
-        Dim items() As String
-        Dim fp As String
-        fp = oneFileName
-
-        ' ファイルを開く
-        Set ts = fso.OpenTextFile(fp)
-          Do Until ts.AtEndOfStream
-            line = ts.ReadLine
-            items = Split(line, ",")
-            Debug.Print UBound(items)
+          Do Until EOF(1)
+            Line Input #1, buf
             n = n + 1
-            Cells(n, 2) = items(n -1)
+            Cells(n, 2) = buf
             Cells(n, 2).WrapText = False
           Loop
-          ts.Close
         Close #1
       Next
       Else
