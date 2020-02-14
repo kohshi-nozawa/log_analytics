@@ -39,9 +39,11 @@ Sub mkaccess_log()
         Dim ts As TextStream
         Dim line As String
         Dim items() As String
+        Dim fp As String
+        fp = oneFileName
 
         ' ファイルを開く
-          Set ts = fso.OpenTextFile(oneFileName, ForRreading)
+          Set ts = fso.OpenTextFile(fp, ForRreading)
           Do Until ts.AtEndOfStream
             line = ts.ReadLine
             items = Split(line, ",")
