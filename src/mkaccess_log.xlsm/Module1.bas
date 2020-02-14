@@ -41,7 +41,7 @@ Sub mkaccess_log()
         Dim items() As String
 
         ' ファイルを開く
-        Set ts = fso.OpenTextFile(oneFileName, ForRreading)
+          Set ts = fso.OpenTextFile(oneFileName, ForRreading)
           Do Until ts.AtEndOfStream
             line = ts.ReadLine
             items = Split(line, ",")
@@ -50,7 +50,8 @@ Sub mkaccess_log()
             Cells(n, 2) = buf
             Cells(n, 2).WrapText = False
           Loop
-        ts.Close
+          ts.Close
+        Close #1
       Next
       Else
         MsgBox ("ファイルを選択しないで終了")
