@@ -29,9 +29,10 @@ Sub mkaccess_log()
     )
   ' 選択したファイルに対する処理
   If IsArray(selectFileName) Then
-  Dim n As Long
+  Dim n As Long , r As Long
   Workbooks.Open (Current & "\" & NewxlsxName)
   n = 1
+  r = 0
     ' 全てのファイルで繰り返し処理を行う
       For Each oneFileName In selectFileName
         Open oneFileName For Input As #1
@@ -43,14 +44,15 @@ Sub mkaccess_log()
         fp = oneFileName
 
         ' ファイルを開く
-          Set ts = fso.OpenTextFile(fp, ForRreading)
+        Set ts = fso.OpenTextFile(fp, ForRreading)
           Do Until ts.AtEndOfStream
             line = ts.ReadLine
             items = Split(line, ",")
             Debug.Print UBound(items)
             n = n + 1
-            Cells(n, 2) = buf
+            Cells(n, 2) = items(r)
             Cells(n, 2).WrapText = False
+            r = r + 1
           Loop
           ts.Close
         Close #1
