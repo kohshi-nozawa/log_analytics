@@ -13,14 +13,17 @@ Sub mkaccess_log()
       MultiSelect:=True _
     )
   ' 選択したファイルに対する処理
-  Dim inputText As String, buf As String
+  Dim inputText As String, buf As String, l As Long
+  l = 2
   If IsArray(selectFileName) Then
     ' 全てのファイルで繰り返し処理を行う
     For Each oneFileName In selectFileName
       Open oneFileName For Input As #1
         Do Until EOF(1)
           Line Input #1, buf
+          Sheets("accesslog").Cells(l,1) = oneFileName
           inputText = inputText & LfToCrlf(buf)
+          l = l + 1
         Loop
       Close #1
     Next
