@@ -26,6 +26,14 @@ Sub mkaccess_log()
   Else
     MsgBox ("ファイルを選択しないで終了します")
   End If
+  
+  filePath = ActiveWorkbook.Path & "\output-date" & ".log"
+  result = saveText(filePath, htmlString)
+  If result Then
+    MsgBox sprintf("%sに出力しました。", filePath)
+  Else
+    MsgBox "出力に失敗しました。システム管理者にお問い合わせください。"
+  End If
 
   ' ログエクセルファイルの名前を定義
   Dim dates As String
@@ -46,7 +54,58 @@ Sub mkaccess_log()
 
 End Sub
 
-'// LF→CRLF
+' LF→CRLF
 Function LfToCrlf(a_sSrc As String) As String
     LfToCrlf = Replace(a_sSrc, vbLf, vbCrLf)
+End Function
+
+' Save file
+Function saveText(filePath As String, text As String, Optional encoding = "UTF-8") As Boolean
+
+    Const adTypeBinary = 1
+    Const adTypeText = 2
+    Const adSaveCreateOverWrite = 2
+
+    Dim Position
+    Dim Charset As String
+    Dim Bytes
+    Position = 0
+
+    Select Case UCase(encoding)
+        Case "UTF-8"
+            Charset = "utf-8"
+            Position = 3
+        Case Else
+            Charset = encoding
+    End Select
+
+    On Error Resume Next
+
+    With CreateObject("ADODB.Stream")
+        .Type = adTypeText
+        .Charset = Charset
+        .Open
+        .WriteText text
+        .Position = 0
+        .Type = adTypeBinary
+        .Position = Position
+        Bytes = .Read
+        .Close
+    End With
+
+    With CreateObject("ADODB.Stream")
+        .Type = adTypeBinary
+        .Open
+        .Position = 0
+        .Write Bytes
+        .SaveToFile filePath, adSaveCreateOverWrite
+        .Close
+    End With
+
+    If Err.Number = 0 Then
+        saveText = True
+    Else
+        saveText = False
+    End If
+
 End Function
