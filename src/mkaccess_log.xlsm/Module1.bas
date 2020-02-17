@@ -13,15 +13,14 @@ Sub mkaccess_log()
       MultiSelect:=True _
     )
   ' 選択したファイルに対する処理
-  Dim LF2CRLF As String ,inputText As String
+  Dim inputText As String, buf As String
   If IsArray(selectFileName) Then
     ' 全てのファイルで繰り返し処理を行う
     For Each oneFileName In selectFileName
       Open oneFileName For Input As #1
         Do Until EOF(1)
           Line Input #1, buf
-          LF2CRLF = buf
-          inputText = inputText & LfToCrlf(LF2CRLF)
+          inputText = inputText & LfToCrlf(buf)
         Loop
       Close #1
     Next
@@ -38,8 +37,7 @@ Sub mkaccess_log()
   End If
 
   ' ログエクセルファイルの名前を定義
-  Dim dates As String
-  Dim NewxlsxName As String
+  Dim dates As String, NewxlsxName As String
   dates = Format(Now, "yyyy-mm-dd")
   NewxlsxName = "access_" & dates & ".xlsx"
 
