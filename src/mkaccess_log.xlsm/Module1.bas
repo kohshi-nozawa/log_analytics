@@ -2,7 +2,7 @@ Attribute VB_Name = "Module1"
 Sub mkaccess_log()
   ' logファイルを開くためのダイアログを開く
   ChDrive "C"
-  ChDir Current
+  ChDir Currentdir
   selectFileName = _
     Application.GetOpenFilename( _
       FileFilter:="すべてのファイル(*),*.*", _
