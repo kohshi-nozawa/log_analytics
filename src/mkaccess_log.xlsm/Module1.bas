@@ -1,8 +1,10 @@
 Attribute VB_Name = "Module1"
 Sub mkaccess_log()
+  Dim Current As String
+  Current = ActiveWorkbook.Path
   ' logファイルを開くためのダイアログを開く
   ChDrive "C"
-  ChDir Current
+  ChDir Cur
   selectFileName = _
     Application.GetOpenFilename( _
       FileFilter:="すべてのファイル(*),*.*", _
@@ -43,14 +45,12 @@ Sub mkaccess_log()
 
   ' テンプレートをコピーして本日のログファイルを作成
   Dim ret As Long
-  Dim Currentdir As String
-  If Dir(Currentdir & "\" & NewxlsxName) <> "" Then
+  If Dir(Current & "\" & NewxlsxName) <> "" Then
         ret = MsgBox("同名のファイルが存在します。" & vbCrLf & _
                   "上書きしますか？", vbYesNo)
         If ret = vbNo Then Exit Sub
   End If
-  Currentdir = ActiveWorkbook.Path
-  FileCopy Currentdir & "\access_" & "temp" & ".xlsx", Currentdir & "\" & NewxlsxName
+  FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
 End Sub
 
