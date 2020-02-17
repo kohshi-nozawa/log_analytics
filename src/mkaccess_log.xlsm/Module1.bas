@@ -26,9 +26,9 @@ Sub mkaccess_log()
   Else
     MsgBox ("ファイルを選択しないで終了します")
   End If
-  
+  Dim result As Boolean, filePath As String
   filePath = ActiveWorkbook.Path & "\output-date" & ".log"
-  result = saveText(filePath, htmlString)
+  result = saveText(filePath, inputText)
   If result Then
     MsgBox sprintf("%sに出力しました。", filePath)
   Else
