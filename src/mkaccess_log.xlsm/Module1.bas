@@ -4,7 +4,7 @@ Sub mkaccess_log()
   Current = ActiveWorkbook.Path
   ' logファイルを開くためのダイアログを開く
   ChDrive "C"
-  ChDir Cur
+  ChDir Current
   selectFileName = _
     Application.GetOpenFilename( _
       FileFilter:="すべてのファイル(*),*.*", _
@@ -30,11 +30,6 @@ Sub mkaccess_log()
   Dim result As Boolean, filePath As String
   filePath = ActiveWorkbook.Path & "\output-date" & ".log"
   result = saveText(filePath, inputText)
-  If result Then
-    MsgBox sprintf("%sに出力しました。", filePath)
-  Else
-    MsgBox "出力に失敗しました。システム管理者にお問い合わせください。"
-  End If
 
   ' ログエクセルファイルの名前を定義
   Dim dates As String, NewxlsxName As String
@@ -42,12 +37,6 @@ Sub mkaccess_log()
   NewxlsxName = "access_" & dates & ".xlsx"
 
   ' テンプレートをコピーして本日のログファイルを作成
-  Dim ret As Long
-  If Dir(Current & "\" & NewxlsxName) <> "" Then
-        ret = MsgBox("同名のファイルが存在します。" & vbCrLf & _
-                  "上書きしますか？", vbYesNo)
-        If ret = vbNo Then Exit Sub
-  End If
   FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
 
 End Sub
