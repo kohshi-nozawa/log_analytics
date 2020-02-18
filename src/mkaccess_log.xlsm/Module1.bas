@@ -1,94 +1,9 @@
 Attribute VB_Name = "Module1"
-Sub mkaccess_log()
-  Dim Current As String
-  Current = ActiveWorkbook.Path
-  ' logファイルを開くためのダイアログを開く
-  ChDrive "C"
-  ChDir Current
-  selectFileName = _
-    Application.GetOpenFilename( _
-      FileFilter:="すべてのファイル(*),*.*", _
-      FilterIndex:=1, _
-      Title:="読み込むファイルを選択してください。", _
-      MultiSelect:=True _
-    )
-  ' 選択したファイルに対する処理
-  Dim inputText As String, buf As String
-  l = 2
-  If IsArray(selectFileName) Then
-    ' 全てのファイルで繰り返し処理を行う
-    For Each oneFileName In selectFileName
-      Open oneFileName For Input As #1
-        Do Until EOF(1)
-          Line Input #1, buf
-          inputText = inputText & Dir(oneFileName) & " | " & LfToCrlf(buf)
-        Loop
-      Close #1
-    Next
-  Else
-    MsgBox ("ファイルを選択しないで終了します")
-  End If
-  Dim filePath As String
-  filePath = ActiveWorkbook.Path & "\output-date" & ".log"
-  Call saveText(filePath, inputText)
-
+Sub searchURL()
+  Dim l As Long
+  l = Cells(Rows.Count, "B").End(xlUp).Row
+  Debug.Print(l)
 End Sub
-
-' LF→CRLF
-Function LfToCrlf(a_sSrc As String) As String
-    LfToCrlf = Replace(a_sSrc, vbLf, vbCrLf)
-End Function
-
-' Save file
-Function saveText(filePath As String, text As String, Optional encoding = "UTF-8") As Boolean
-
-    Const adTypeBinary = 1
-    Const adTypeText = 2
-    Const adSaveCreateOverWrite = 2
-
-    Dim Position
-    Dim Charset As String
-    Dim Bytes
-    Position = 0
-
-    Select Case UCase(encoding)
-        Case "UTF-8"
-            Charset = "utf-8"
-            Position = 3
-        Case Else
-            Charset = encoding
-    End Select
-
-    On Error Resume Next
-
-    With CreateObject("ADODB.Stream")
-        .Type = adTypeText
-        .Charset = Charset
-        .Open
-        .WriteText text
-        .Position = 0
-        .Type = adTypeBinary
-        .Position = Position
-        Bytes = .Read
-        .Close
-    End With
-
-    With CreateObject("ADODB.Stream")
-        .Type = adTypeBinary
-        .Open
-        .Position = 0
-        .Write Bytes
-        .SaveToFile filePath, adSaveCreateOverWrite
-        .Close
-    End With
-
-    If Err.Number = 0 Then
-        saveText = True
-    Else
-        saveText = False
-    End If
-
-End Function
 
 ' sprintf
 '
