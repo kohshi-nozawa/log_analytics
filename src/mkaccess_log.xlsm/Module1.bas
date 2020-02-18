@@ -30,17 +30,9 @@ Sub mkaccess_log()
   Else
     MsgBox ("ファイルを選択しないで終了します")
   End If
-  Dim result As Boolean, filePath As String
+  Dim filePath As String
   filePath = ActiveWorkbook.Path & "\output-date" & ".log"
-  result = saveText(filePath, inputText)
-
-  ' ログエクセルファイルの名前を定義
-  Dim dates As String, NewxlsxName As String
-  dates = Format(Now, "yyyy-mm-dd")
-  NewxlsxName = "access_" & dates & ".xlsx"
-
-  ' テンプレートをコピーして本日のログファイルを作成
-  FileCopy Current & "\access_" & "temp" & ".xlsx", Current & "\" & NewxlsxName
+  saveText(filePath, inputText)
 
 End Sub
 
