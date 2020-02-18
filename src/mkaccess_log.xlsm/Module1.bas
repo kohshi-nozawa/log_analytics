@@ -21,9 +21,11 @@ Sub mkaccess_log()
       Open oneFileName For Input As #1
         Do Until EOF(1)
           Line Input #1, buf
-          Sheets("accesslog").Cells(l,1) = oneFileName
-          inputText = inputText & LfToCrlf(buf)
+          l = 1
           l = l + 1
+          Sheets("accesslog").Cells(l,1) = Dir(oneFileName)
+          Sheets("accesslog").Cells(l,2) = LfToCrlf(buf)
+          inputText = inputText & LfToCrlf(buf)
         Loop
       Close #1
     Next
@@ -32,7 +34,7 @@ Sub mkaccess_log()
   End If
   Dim filePath As String
   filePath = ActiveWorkbook.Path & "\output-date" & ".log"
-  saveText(filePath, inputText)
+  Call saveText(filePath, inputText)
 
 End Sub
 
