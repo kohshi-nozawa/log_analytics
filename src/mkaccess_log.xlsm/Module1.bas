@@ -1,5 +1,11 @@
 Attribute VB_Name = "Module1"
 Sub searchURL()
+  With Application
+    .Calculation = xlCalculationManual
+    .EnableEvents = False
+    .ScreenUpdating = False
+  End With
+
   ' ÉçÉOÇÃç≈å„ÇÃçsÇéÊìæ
   Dim lastRow_S1 As Long, lastRow_S2 As Long
   lastRow_S1 = Worksheets("accesslog").Cells(Rows.Count, "B").End(xlUp).Row - 1
@@ -19,4 +25,10 @@ Sub searchURL()
     End If
     Next
   Next
+
+  With Application
+    .Calculation = xlCalculationAutomatic
+    .EnableEvents = True
+    .ScreenUpdating = True
+  End With
 End Sub
