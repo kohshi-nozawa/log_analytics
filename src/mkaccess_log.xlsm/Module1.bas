@@ -32,3 +32,27 @@ Sub searchURL()
     .ScreenUpdating = True
   End With
 End Sub
+
+Sub margeLog()
+  Dim Current As String
+  Current = ActiveWorkbook.Path
+  ' logファイルを開くためのダイアログを開く
+  ChDrive "C"
+  ChDir Current
+  selectFileName = _
+    Application.GetOpenFilename( _
+      FileFilter:="すべてのファイル(*),*.*", _
+      FilterIndex:=1, _
+      Title:="読み込むファイルを選択してください。", _
+      MultiSelect:=True _
+    )
+
+  ' 選択したファイルに対する処理
+  Dim inputText As String, buf As String, allFile As String
+  If IsArray(selectFileName) Then
+    ' 全てのファイルで繰り返し処理を行う
+    Debug.Print(selectFileName)
+  Else
+    MsgBox ("ファイルを選択しないで終了します")
+  End If
+End Sub
